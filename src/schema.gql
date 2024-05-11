@@ -14,14 +14,30 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type User {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  email: String!
+}
+
 type Query {
   tenants: [Tenant!]!
+  users: [User!]!
 }
 
 type Mutation {
   createTenant(createTenantInput: CreateTenantDto!): Tenant!
+  createUser(createUserDto: CreateUserDto!): User!
 }
 
 input CreateTenantDto {
   name: String!
+}
+
+input CreateUserDto {
+  name: String!
+  email: String!
+  password: String!
 }

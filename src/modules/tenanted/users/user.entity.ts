@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { AbstractEntity } from 'src/abstract.entity';
 import { Entity, Column } from 'typeorm';
 
@@ -14,6 +14,6 @@ export class User extends AbstractEntity {
   email: string;
 
   @Column()
-  @Field()
+  @HideField()
   password: string;
 }

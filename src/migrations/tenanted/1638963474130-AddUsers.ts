@@ -11,7 +11,7 @@ export class AddUsers1638963474130 implements MigrationInterface {
       .options as PostgresConnectionOptions;
 
     await queryRunner.query(
-      `CREATE TABLE "${schema}"."users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "PK_${schema}_4873483882def9ba79ad5ccddbf" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "${schema}"."users" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, CONSTRAINT "PK_${schema}_4873483882def9ba79ad5ccddbf" PRIMARY KEY ("id"))`,
     );
   }
 
