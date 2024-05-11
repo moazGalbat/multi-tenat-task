@@ -1,3 +1,4 @@
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 
 module.exports = {
@@ -11,4 +12,5 @@ module.exports = {
   autoLoadEntities: true,
   entities: [join(__dirname, './modules/public/**/*.entity{.ts,.js}')],
   migrations: [join(__dirname, './migrations/public/*{.ts,.js}')],
-};
+  // synchronize: true,
+} as TypeOrmModuleOptions;
