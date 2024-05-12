@@ -6,9 +6,13 @@ import { UsersModule } from './modules/tenanted/users/users.module';
 import * as ormconfig from './public.orm.config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { AuthModule } from './modules/tenanted/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import config from './config/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/schema.gql',
@@ -17,6 +21,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     TenantsModule,
     TenancyModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

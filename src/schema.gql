@@ -20,6 +20,12 @@ type User {
   updatedAt: DateTime!
   name: String!
   email: String!
+  role: String!
+}
+
+type AccessToken {
+  accessToken: String!
+  refreshToken: String!
 }
 
 type Query {
@@ -30,6 +36,9 @@ type Query {
 type Mutation {
   createTenant(createTenantInput: CreateTenantDto!): Tenant!
   createUser(createUserDto: CreateUserDto!): User!
+  signUp(signUpInput: SignupInput!): AccessToken!
+  login(loginInput: LoginInput!): AccessToken!
+  refreshToken: AccessToken!
 }
 
 input CreateTenantDto {
@@ -38,6 +47,17 @@ input CreateTenantDto {
 
 input CreateUserDto {
   name: String!
+  email: String!
+  password: String!
+}
+
+input SignupInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
   email: String!
   password: String!
 }

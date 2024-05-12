@@ -9,11 +9,15 @@ export class User extends AbstractEntity {
   @Field()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   @Field()
   email: string;
 
   @Column()
   @HideField()
   password: string;
+
+  @Column()
+  @Field()
+  role: string;
 }
