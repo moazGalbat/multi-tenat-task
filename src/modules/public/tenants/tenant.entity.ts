@@ -5,7 +5,7 @@ import { Column, Entity } from 'typeorm';
 @Entity({ name: 'tenants' })
 @ObjectType()
 export class Tenant extends AbstractEntity {
-  @Column()
+  @Column({ unique: true })
   @Field()
   name: string;
 }
