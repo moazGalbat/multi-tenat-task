@@ -4,6 +4,8 @@ import { getTenantConnection } from '../../tenancy/tenancy.utils';
 import { getManager, Repository } from 'typeorm';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { Tenant } from './tenant.entity';
+import { User } from 'src/modules/tenanted/users/user.entity';
+import { Role } from 'src/modules/tenanted/auth/role.enum';
 
 @Injectable()
 export class TenantsService {
@@ -12,7 +14,7 @@ export class TenantsService {
     private readonly tenantsRepository: Repository<Tenant>,
   ) {}
 
-  async create(createTenantDto: CreateTenantDto): Promise<Tenant> {
+  async create(createTenantDto: CreateTenantDto, user: User): Promise<Tenant> {
     let tenant = new Tenant();
     tenant.name = createTenantDto.name;
 
@@ -23,6 +25,7 @@ export class TenantsService {
 
     const connection = await getTenantConnection(`${tenant.id}`);
     await connection.runMigrations();
+    await connection.getRepository(User).save({ ...user, role: Role.ADMIN });
     await connection.close();
 
     return tenant;
