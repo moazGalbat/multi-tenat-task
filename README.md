@@ -1,3 +1,43 @@
+## Archticture:
+In the project, the sub-schema strategy is employed to implement a multi-tenant architecture. Here's how it works:
+
+Sub-schema Strategy:
+
+This strategy involves creating separate database schemas for each tenant, rather than separate databases.
+Each schema acts as a self-contained unit within the same database instance, providing isolation and security between tenants' data.
+            +----------------------+
+            |   Public Schema DB   |
+            |                      |
+            |   +--------------+   |
+            |   |  Public      |   |
+            |   |  Tables      |   |
+            |   |              |   |
+            |   +--------------+   |
+            +----------------------+
+                     |
+                     |
+                     V
+            +----------------------+
+            |   Sub-Schema DBs     |
+            |                      |
+            |   +--------------+   |
+            |   |  Tenant 1    |   |
+            |   |  Tables      |   |
+            |   |              |   |
+            |   +--------------+   |
+            |                      |
+            |   +--------------+   |
+            |   |  Tenant 2    |   |
+            |   |  Tables      |   |
+            |   |              |   |
+            |   +--------------+   |
+            |                      |
+            |        ...           |
+            +----------------------+
+
+Request Journey:
+![image](https://github.com/moazGalbat/multi-tenat-task/assets/58135816/c7bb6830-6944-41bf-8d3b-8997922bdafd)
+
 ### Repository Structure
 
 This repository organizes the application into functional modules, distinguishing between public and tenanted functionalities for clarity.
