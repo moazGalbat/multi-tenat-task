@@ -158,6 +158,7 @@ docker compose up
 ## Test
 
 ```bash
+npm install --legacy-peer-deps
 # e2e tests
 $ npm run test:e2e
 ```
