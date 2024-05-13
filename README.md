@@ -5,6 +5,8 @@ Sub-schema Strategy:
 
 This strategy involves creating separate database schemas for each tenant, rather than separate databases.
 Each schema acts as a self-contained unit within the same database instance, providing isolation and security between tenants' data.
+
+```
             +----------------------+
             |   Public Schema DB   |
             |                      |
@@ -34,6 +36,7 @@ Each schema acts as a self-contained unit within the same database instance, pro
             |                      |
             |        ...           |
             +----------------------+
+```
 
 Request Journey:
 ![image](https://github.com/moazGalbat/multi-tenat-task/assets/58135816/c7bb6830-6944-41bf-8d3b-8997922bdafd)
