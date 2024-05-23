@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getTenantConnection } from '../../tenancy/tenancy.utils';
-import { getManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { Tenant } from './tenant.entity';
 import { User } from 'src/modules/tenanted/users/user.entity';
 import { Role } from 'src/modules/tenanted/auth/role.enum';
-
+import { AppDataSource } from 'src/datasource';
 @Injectable()
 export class TenantsService {
   constructor(
@@ -21,12 +21,12 @@ export class TenantsService {
     tenant = await this.tenantsRepository.save(tenant);
 
     const schemaName = `tenant_${tenant.id}`;
-    await getManager().query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
+    await AppDataSource.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
 
     const connection = await getTenantConnection(`${tenant.id}`);
     await connection.runMigrations();
     await connection.getRepository(User).save({ ...user, role: Role.ADMIN });
-    await connection.close();
+    await connection.destroy();
 
     return tenant;
   }

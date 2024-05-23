@@ -11,7 +11,7 @@ import { PasswordService } from './password.service';
 import { SecurityConfig } from 'src/config/config.interface';
 import { SignupInput } from './dto/singup.input';
 import { AccessToken } from './dto/access-token.dto';
-import { Connection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from '../users/user.entity';
 import { CONNECTION } from 'src/modules/tenancy/tenancy.symbols';
 import { LoginInput } from './dto/login.input';
@@ -24,7 +24,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly passwordService: PasswordService,
     private readonly configService: ConfigService,
-    @Inject(CONNECTION) connection: Connection,
+    @Inject(CONNECTION) connection: DataSource,
   ) {
     this.userRepository = connection.getRepository(User);
   }

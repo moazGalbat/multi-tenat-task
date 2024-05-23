@@ -1,5 +1,5 @@
 import { Field, HideField, ObjectType } from '@nestjs/graphql';
-import { AbstractEntity } from 'src/abstract.entity';
+import { AbstractEntity } from '../../../abstract.entity';
 import { Entity, Column } from 'typeorm';
 
 @Entity({ name: 'users' })

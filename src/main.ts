@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { getConnection, getManager } from 'typeorm';
 import { getTenantConnection } from './modules/tenancy/tenancy.utils';
 import { tenancyMiddleware } from './modules/tenancy/tenancy.middleware';
 import { ValidationPipe } from '@nestjs/common';
 import { seedMainTenant, seedSuperAmin } from './seed';
+import { AppDataSource } from './datasource';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
@@ -15,10 +15,11 @@ async function bootstrap() {
   );
   app.use(tenancyMiddleware);
 
-  await getConnection().runMigrations();
-  await seedMainTenant();
-  const schemas = await getManager().query(
-    'select schema_name as name from information_schema.schemata;',
+  const mainDataSource = await AppDataSource.initialize(); // Initialize the main DataSource
+  await AppDataSource.runMigrations(); // Run migrations on the main DataSource
+  await seedMainTenant(mainDataSource);
+  const schemas = await AppDataSource.query(
+    'SELECT schema_name as name FROM information_schema.schemata;',
   );
 
   for (let i = 0; i < schemas.length; i += 1) {
@@ -29,9 +30,9 @@ async function bootstrap() {
       const connection = await getTenantConnection(tenantId);
       await connection.runMigrations();
       await seedSuperAmin(connection, tenantId);
-      await connection.close();
+      await connection.destroy();
     }
   }
-  await app.listen(3000);
+  await app.listen(5001);
 }
 bootstrap();

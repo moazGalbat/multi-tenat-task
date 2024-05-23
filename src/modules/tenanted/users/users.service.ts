@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Connection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CONNECTION } from 'src/modules/tenancy/tenancy.symbols';
@@ -10,7 +10,7 @@ export class UserService {
   private readonly userRepository: Repository<User>;
 
   constructor(
-    @Inject(CONNECTION) connection: Connection,
+    @Inject(CONNECTION) connection: DataSource,
     private passwordService: PasswordService,
   ) {
     this.userRepository = connection.getRepository(User);

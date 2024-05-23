@@ -1,5 +1,6 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
+import 'dotenv/config';
+import { DataSourceOptions } from 'typeorm';
 
 module.exports = {
   type: 'postgres',
@@ -13,4 +14,4 @@ module.exports = {
   entities: [join(__dirname, './modules/public/**/*.entity{.ts,.js}')],
   migrations: [join(__dirname, './migrations/public/*{.ts,.js}')],
   // synchronize: true,
-} as TypeOrmModuleOptions;
+} as DataSourceOptions;
